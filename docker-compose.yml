@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    ports:
+      - "9090:9090"
+
+  mcp:
+    build: .
+    environment:
+      - PROMETHEUS_BASE_URL=http://prometheus:9090
+      - MCP_PORT=8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - prometheus
+
